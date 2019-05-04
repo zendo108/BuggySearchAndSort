@@ -8,6 +8,9 @@ import java.util.Arrays;
  * TODO: The search and sort methods in this class contain bugs that can
  * cause incorrect output or infinite loops.  Use the Eclipse debugger to 
  * find the bugs and fix them
+ * 
+ * https://github.com/zendo108/BuggySearchAndSort
+ * 
  */
 public class BuggySearchAndSort {
 	
@@ -32,15 +35,15 @@ public class BuggySearchAndSort {
 		Arrays.sort(A);  // Sort using Java's built-in sort method!
 		System.out.print("Sorted by Arrays.sort():  ");
 		printArray(A);   // (Prints a correctly sorted array.)
-
+                System.out.println("Problem in next line");
 		bubbleSort(B);
 		System.out.print("Sorted by Bubble Sort:    ");
 		printArray(B);
-
+//
 		selectionSort(C);
 		System.out.print("Sorted by Selection Sort: ");
 		printArray(C);
-		
+//		
 		insertionSort(D);
 		System.out.print("Sorted by Insertion Sort: ");
 		printArray(D);
@@ -71,7 +74,7 @@ public class BuggySearchAndSort {
 	 */
 	public static void bubbleSort(int[] array) {
 		for (int i = 0; i < array.length; i++) {
-			for (int j = 0; j < array.length-1; i++) {
+			for (int j = 0; j < array.length-1; j++) {//<--- i instead of j
 				if (array[j] > array[j+1]) { // swap elements j and j+1
 					int temp = array[j];
 					array[j] = array[j+1];
@@ -90,7 +93,7 @@ public class BuggySearchAndSort {
 		for (int top = array.length - 1; top > 0; top--) {
 			int positionOfMax = 0;
 			for (int i = 1; i <= top; i++) {
-				if (array[1] > array[positionOfMax])
+				if (array[i] > array[positionOfMax])//<--- change array[1] to array[i]
 					positionOfMax = i;
 			}
 			int temp = array[top];  // swap top item with biggest item
@@ -108,12 +111,13 @@ public class BuggySearchAndSort {
 		for (int top = 1; top < array.length; top++) {
 			int temp = array[top];  // copy item that into temp variable
 			int pos = top - 1;
-			while (pos > 0 && array[pos] > temp) {
+			while (pos >= 0 && array[pos] > temp) {//<-- pos > 0   to   pos >= 0
 				   // move items that are bigger than temp up one position
 				array[pos+1] = array[pos];
+                                array[pos] = temp;//<<<<--------moved this from after the while loop
 				pos--;
 			}
-			array[pos] = temp;  // place temp into last vacated position
+//			array[pos] = temp;  // place temp into last vacated position <<<<<---------moved inside while loop before pos--
 		}
 	}
 	
