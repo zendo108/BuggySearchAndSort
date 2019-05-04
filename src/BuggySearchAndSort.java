@@ -35,7 +35,8 @@ public class BuggySearchAndSort {
 		Arrays.sort(A);  // Sort using Java's built-in sort method!
 		System.out.print("Sorted by Arrays.sort():  ");
 		printArray(A);   // (Prints a correctly sorted array.)
-                System.out.println("Problem in next line");
+                //The next line I used for debugging purposes
+//                System.out.println("Problem in next line");
 		bubbleSort(B);
 		System.out.print("Sorted by Bubble Sort:    ");
 		printArray(B);
@@ -75,6 +76,10 @@ public class BuggySearchAndSort {
 	public static void bubbleSort(int[] array) {
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < array.length-1; j++) {//<--- i instead of j
+                            /*
+                                So basically the wrong initialization variable was being incremented
+                                so i changed i for j and that was the fix
+                            */
 				if (array[j] > array[j+1]) { // swap elements j and j+1
 					int temp = array[j];
 					array[j] = array[j+1];
@@ -94,6 +99,11 @@ public class BuggySearchAndSort {
 			int positionOfMax = 0;
 			for (int i = 1; i <= top; i++) {
 				if (array[i] > array[positionOfMax])//<--- change array[1] to array[i]
+                            /*
+                                    The array index was set at 1 so that the left part of the expression
+                                    inside the IF was always the same value of the second item of the array
+                                    
+                            */
 					positionOfMax = i;
 			}
 			int temp = array[top];  // swap top item with biggest item
@@ -112,9 +122,18 @@ public class BuggySearchAndSort {
 			int temp = array[top];  // copy item that into temp variable
 			int pos = top - 1;
 			while (pos >= 0 && array[pos] > temp) {//<-- pos > 0   to   pos >= 0
+                            /*
+                                    inside the while loop expression pos was never allowed to get to 0
+                                    so I changed pos > 0   to   pos >= 0
+                            */
 				   // move items that are bigger than temp up one position
 				array[pos+1] = array[pos];
                                 array[pos] = temp;//<<<<--------moved this from after the while loop
+                                /*
+                                    array[pos] = temp; was placed outside the loop block
+                                    so the that item of the array was never taken care of in the right place
+                                    right above here
+                            */
 				pos--;
 			}
 //			array[pos] = temp;  // place temp into last vacated position <<<<<---------moved inside while loop before pos--
